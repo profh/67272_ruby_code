@@ -1,32 +1,38 @@
 # Examples: looking at classes and ancestors
-5.class                 # => Fixnum
-5.class.ancestors       # => [Fixnum, Integer, Numeric, Comparable, Object, Kernel, BasicObject]
+  5.class                     # => Fixnum
+  5.class.ancestors           # => [Fixnum, Integer, Numeric, Comparable, Object, Kernel, BasicObject]
 
-"Quack".class           # => String
-"Quack".class.ancestors # => [String, Comparable, Object, Kernel, BasicObject]
+  "Quack".class               # => String
+  "Quack".class.ancestors     # => [String, Comparable, Object, Kernel, BasicObject]
 
-[1,2,3].class           # => Array
-[1,2,3].class.ancestors # => [Array, Enumerable, Object, Kernel, BasicObject]
+  [1,2,3].class               # => Array
+  [1,2,3].class.ancestors     # => [Array, Enumerable, Object, Kernel, BasicObject]
  
-d = class Duck; self; end;
-daffy = Duck.new
-d.class                 # => Class
-d.class.ancestors       # => [Class, Module, Object, Kernel, BasicObject]
-daffy.class             # => Duck
-daffy.class.ancestors   # => [Duck, Object, Kernel, BasicObject]
+  d = class Duck; self; end;  # making a quick class
+  daffy = Duck.new            # making an instance of that class
+  d.class                     # => Class
+  d.class.ancestors           # => [Class, Module, Object, Kernel, BasicObject]
+  daffy.class                 # => Duck
+  daffy.class.ancestors       # => [Duck, Object, Kernel, BasicObject]
 
+# Note that everything -- integers, arrays, strings, classes -- are part of Object
+  5.kind_of? Object           # => true
+  "Quack".kind_of? Object     # => true 
+  [1,2,3].kind_of? Object     # => true 
+  d.kind_of? Object           # => true 
+  daffy.kind_of? Object       # => true     
 
 # Object receive messages
-"quack".send :upcase    # => "QUACK"
-5.send :+, 9            # => 14
-[1,2,3].send :nil?      # => false
-d.send :class           # => Class
-daffy.send :class       # => Duck
+  "quack".send :upcase        # => "QUACK"
+  5.send :+, 9                # => 14
+  [1,2,3].send :nil?          # => false
+  d.send :class               # => Class
+  daffy.send :class           # => Duck
 
 
-###########################################
-###  Example of the pen and the scribe  ###
-###########################################
+###############################################
+#####  Example of the pen and the scribe  #####
+###############################################
 
   # create a pen object
   pen = Object.new      # => #<Object:0x007f8f3c0ca378>
@@ -40,10 +46,13 @@ daffy.send :class       # => Duck
   pen.to_s              # => "A trusty pen"
   pen                   # => A trusty pen (the to_s method served as the object's name now)
   
-  # pen.write "nunqeh Terran" # => NoMethodError: undefined method `write' for A trusty pen:Object
+  # let's start writing with our pen...
+  # pen.write "nunqeh Terran" 
+  ## => NoMethodError: undefined method `write' for A trusty pen:Object
   
+  # fine, then let's add a method to this pen object so it can write
   def pen.write(words)
-    Kernel.puts words
+    puts words
   end
   
   pen.write "nunqeh Terran" 
@@ -52,7 +61,8 @@ daffy.send :class       # => Duck
   ## => nil >> A trusty pen
   
   # let's make the pen a blue ink pen (b/c blue is an awesome color...)
-  # pen.ink_color = "Blue"  # => NoMethodError: undefined method `ink_color' for A trusty pen:Object
+  # pen.ink_color = "Blue"  
+  ## => NoMethodError: undefined method `ink_color' for A trusty pen:Object
   
   # okay, let's define the method ink_color for the pen object
   def pen.ink_color= color
@@ -94,35 +104,49 @@ daffy.send :class       # => Duck
   pen.html_write "Sorry Lizzie for the embedded style" 
   ## => nil >> <p style="color: Blue;">Sorry Lizzie for the embedded style</p>
   
-  # create a scribe class to use the pen
+  # time for a break in the action
+  puts Array.new(20, "-").join
+  puts
+  
+  # create a scribe class who will actually use the pen object we created
   class Scribe 
     def initialize pen
       # a scribe needs almost by definition a pen, quill, etc.
       @pen = pen  
       # a list of items we want the scribe to record
-      @items = Array.new 
+      @list = Array.new 
     end
     
-    attr_reader :pen, :items
+    attr_reader :pen, :list
     
     def note item
       # when we tell the scribe to make a note, he/she adds it to the list
-      @items << item
+      @list << item
     end
     
     def write_everything
       # when we want to see all the items in the list
-      @items.each{ |item| @pen.write item }
+      @list.each{ |item| @pen.write item }
     end
   end
   
   # one of the most famous scribes in the O.T. was Ezra 
   # (and the only one I can think of right now), so ...
   ezra = Scribe.new pen
+  # let's verify that Ezra has the pen object we've created
   p ezra.pen
+  
+  # time for Ezra to make some notes; first will be the time itself
   ezra.note "The time is #{Time.now}"
-  p ezra.items
+  # verify that the note is on the list
+  p ezra.list
+  
+  # one more note for good measure
   ezra.note "Time to read the Law to the people"
+  
+  # now print it all out with the pen
   ezra.write_everything
+  
+  ## OUTPUT:
   # >> The time is 2013-03-20 08:37:03 -0400
   # >> Time to read the Law to the people
