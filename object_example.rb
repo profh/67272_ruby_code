@@ -15,12 +15,16 @@
   daffy.class                 # => Duck
   daffy.class.ancestors       # => [Duck, Object, Kernel, BasicObject]
 
+
 # Note that everything -- integers, arrays, strings, classes -- are part of Object
   5.kind_of? Object           # => true
-  "Quack".kind_of? Object     # => true 
-  [1,2,3].kind_of? Object     # => true 
-  d.kind_of? Object           # => true 
-  daffy.kind_of? Object       # => true     
+  "Quack".kind_of? Object     # => true
+  [1,2,3].kind_of? Object     # => true
+  d.is_a? Object              # => true
+  daffy.is_a? Object          # => true
+  # --------------------
+  daffy.instance_of? Duck     # => true
+  daffy.instance_of? Object   # => false
 
 # Object receive messages
   "quack".send :upcase        # => "QUACK"
@@ -28,6 +32,10 @@
   [1,2,3].send :nil?          # => false
   d.send :class               # => Class
   daffy.send :class           # => Duck
+  
+# Object responds to messages
+  "quack".respond_to? :length # => true
+  5.respond_to? :+            # => true
 
 
 ###############################################
@@ -56,9 +64,9 @@
   end
   
   pen.write "nunqeh Terran" 
-  ## => nil >> nunqeh Terran
+  # => nil >> nunqeh Terran
   pen.write pen             
-  ## => nil >> A trusty pen
+  # => nil >> A trusty pen
   
   # let's make the pen a blue ink pen (b/c blue is an awesome color...)
   # pen.ink_color = "Blue"  
@@ -78,7 +86,7 @@
   end
   
   # verify that it works
-  pen.send :to_s            # => "A trusty blue pen"
+  p pen.send :to_s            # => "A trusty blue pen"
   
   # writing a method that adds 'sparkles' to words to demo implicit receivers
   def pen.sparkly_write words
@@ -93,7 +101,7 @@
   # create a method to write html
   def pen.html_write words
     if @ink_color
-      write "<p style=\"color: #{@ink_color};\">#{words}</p>"
+      write "<p style=\"color: #{@ink_color.downcase};\">#{words}</p>"
       # sorry for adding the color style right in the p tag but works for a demo...
     else
       write "<p>#{words}</p>"
@@ -102,7 +110,7 @@
   
   # now try this method out...
   pen.html_write "Sorry Lizzie for the embedded style" 
-  ## => nil >> <p style="color: Blue;">Sorry Lizzie for the embedded style</p>
+  # => nil >> <p style="color: Blue;">Sorry Lizzie for the embedded style</p>
   
   # time for a break in the action
   puts Array.new(20, "-").join
@@ -117,7 +125,22 @@
       @list = Array.new 
     end
     
-    attr_reader :pen, :list
+    # Getters and setters manually...
+    # def list
+    #   @list
+    # end
+    # 
+    # def pen
+    #   @pen
+    # end
+    # 
+    # def pen=(pen)
+    #   @pen = pen
+    # end
+    
+    # the easy way in Ruby... (same results as above)
+    attr_reader :list
+    attr_accessor :pen
     
     def note item
       # when we tell the scribe to make a note, he/she adds it to the list
@@ -126,7 +149,7 @@
     
     def write_everything
       # when we want to see all the items in the list
-      @list.each{ |item| @pen.write item }
+      @list.each{ |item| @pen.html_write item }
     end
   end
   

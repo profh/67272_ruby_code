@@ -27,12 +27,12 @@ class Dog
     # printing this out to verify this happened...
     puts "#{@@number_of_dogs}. The global variable is #{$hero} and the breed is #{@breed}\n\n"
   end
-  
+
   # a getter method for getting the value of the @name instance variable
   def name
     @name
   end
-  
+    
   # a setter method for assigning a value to the @name instance variable
   def name=(name)
     @name = name
@@ -103,3 +103,4 @@ print Dog.number_of_dogs
 underdog.name = $hero  # Setting the underdog object's name to the global variable
 puts "#{underdog} is #{underdog.age || default_age} years old"
 puts "In dog years, that makes #{underdog} #{underdog.dog_years || default_age * mult_dog} years old."
+puts

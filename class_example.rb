@@ -48,7 +48,6 @@ puts "Created #{avery}"
 puts avery.cumulative_count
 puts
 puts Array.new(20, "-").join
-puts "Leah's question:"
 puts profh.cumulative_count
 puts "Double check time:"
 final = Person.number_of_people
