@@ -10,7 +10,7 @@
 
 
 def get_population(state, *file)
-  filename = ( file[0] ||= (ENV['HOME'] + '/citypop_default.txt') )
+  filename = ( file[0] ||= 'citypop_default.txt')
 
   cities = {}
   pop_file = File.open(filename)

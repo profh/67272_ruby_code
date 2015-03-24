@@ -90,6 +90,12 @@ class Population
 end
 
 
+
+
+
+
+## RUNNING THE CODE..
+
 pop1 = Population.new
 pop1.get_pop("CA")
 puts        
@@ -101,6 +107,7 @@ pop1.get_pop("NC")
 puts
 pop1.get_pop("NH")
 puts "---------------------------------"
+puts ""
 pop1.population_file=("citypop_1900.txt")
 pop1.peek_into_file
 puts
@@ -109,7 +116,7 @@ puts
 pop1.state = "NC"
 pop1.get_pop
 puts "---------------------------------"
-puts
+puts ""
 pop2 = Population.new("citypop_1900.txt")
 pop2.get_pop("CA")
 puts
