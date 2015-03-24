@@ -12,7 +12,7 @@
 def get_population(state, *file)
   filename = ( file[0] ||= 'citypop_default.txt')
 
-  cities = {}
+  cities = Hash.new
   pop_file = File.open(filename)
   pop_file.each_line do |line|
     city, st, population = line.split(/\t/)
@@ -35,4 +35,6 @@ end
 
 get_population("CA", "citypop.txt") 
 puts
-get_population("PA") 
+get_population("PA", "citypop_1900.txt") 
+puts
+get_population("NH")

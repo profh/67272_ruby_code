@@ -11,7 +11,7 @@
 class Population
   
   def initialize(state)
-    @cities = {}
+    @cities = Hash.new
     @file = File.open("citypop.txt")
     @file.each_line do |line|
       city, st, population = line.split(/\t/)

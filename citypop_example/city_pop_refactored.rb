@@ -14,6 +14,7 @@ class Population
   def initialize(file="citypop.txt")
     @population_file = file
     @file_lines = Array.new
+    @cities = Hash.new
   end
 
   # Create some getters and setters
@@ -44,12 +45,6 @@ class Population
     lines.times{|i| puts "L#{i+1}: #{file_lines[i]}"}
   end
   
-  private
-  def read_file
-    file = File.open(@population_file)
-    @file_lines = file.readlines()
-  end
-  
   def find_cities_for_state(st)
     @cities = Hash.new
     self.file_lines.each do |line|
@@ -57,6 +52,14 @@ class Population
       cities[city] = population.chomp if state == st
     end
   end
+  
+  private
+  def read_file
+    file = File.open(@population_file)
+    @file_lines = file.readlines()
+  end
+  
+
 
   def print_cities
     unless cities.empty? 
@@ -97,7 +100,8 @@ end
 ## RUNNING THE CODE..
 
 pop1 = Population.new
-pop1.get_pop("CA")
+pop1.state = "CA"
+pop1.get_pop
 puts        
 pop1.get_pop("TX")
 puts        
