@@ -48,7 +48,7 @@ class Population
   def find_cities_for_state(st)
     @cities = Hash.new
     self.file_lines.each do |line|
-      city, st, population = line.split(/\t/)
+      city, state, population = line.split(/\t/)
       cities[city] = population.chomp if state == st
     end
   end
@@ -73,7 +73,7 @@ class Population
   
   def sort_cities_alphabetically
     # @cities = @cities.sort{|a,b| a[0]<=>b[0]}      # older C syntax
-    cities = self.cities.sort_by{ |city,pop| city }  # use Ruby syntax
+    cities = self.cities.sort_by{ |city, pop| city }  # use Ruby syntax
   end
   
   def sort_cities_by_population
@@ -97,7 +97,7 @@ end
 
 
 
-## RUNNING THE CODE..
+## RUNNING THE CODE...
 
 pop1 = Population.new
 pop1.state = "CA"

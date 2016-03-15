@@ -4,7 +4,8 @@ def brk
 end
 
 # # Finding all symbols and symbol methods
-Symbol.all_symbols.sort{|x,y| x.to_s <=> y.to_s }.each { |x| print x.to_s + "\t" }
+symbols = Symbol.all_symbols.sort{|x,y| x.to_s <=> y.to_s }
+symbols.each { |x| print x.to_s + "\t" }
 brk
 
 # Strings and Symbols
@@ -13,7 +14,7 @@ puts :"duck"          # the : converts the string to a symbol
 puts :duck            # since it is so common, Ruby let's us drop the quotation marks
 puts "duck".to_sym    # this is a string converted to a symbol with .to_sym method
 puts %s[goose]        # %s[goose].class # => Symbol
-# # brk
+brk
 # 
 # 
 # Adding more symbols to the symbols table
@@ -42,7 +43,7 @@ brk
 puts :favorite.object_id.to_s
 puts :favorite.object_id.to_s
 puts :favorite.object_id.to_s
-
+brk
 
 # # Symbols are faster than strings
 require 'benchmark'
