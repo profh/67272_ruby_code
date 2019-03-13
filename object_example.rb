@@ -1,6 +1,6 @@
 # Examples: looking at classes and ancestors
-  5.class                     # => Fixnum
-  5.class.ancestors           # => [Fixnum, Integer, Numeric, Comparable, Object, Kernel, BasicObject]
+  5.class                     # => Integer
+  5.class.ancestors           # => [Integer, Numeric, Comparable, Object, Kernel, BasicObject]
 
   "Quack".class               # => String
   "Quack".class.ancestors     # => [String, Comparable, Object, Kernel, BasicObject]
@@ -73,7 +73,7 @@
   ## => NoMethodError: undefined method `ink_color' for A trusty pen:Object
   
   # okay, let's define the method ink_color for the pen object
-  def pen.ink_color= color
+  def pen.ink_color=(color)
     @ink_color = color
   end
   
@@ -137,7 +137,7 @@
     # def pen=(pen)
     #   @pen = pen
     # end
-    
+    # 
     # the easy way in Ruby... (same results as above)
     attr_reader :list
     attr_accessor :pen
@@ -171,5 +171,33 @@
   ezra.write_everything
   
   ## OUTPUT:
-  # >> The time is 2013-03-20 08:37:03 -0400
+  # >> The time is 2018-03-06 12:37:03 -0400
   # >> Time to read the Law to the people
+  
+  
+  # time for another break in the action
+  puts Array.new(20, "-").join
+  puts
+  # follow-up on previous ideas...
+  # adding a method to just the ezra object
+  def ezra.speak_hebrew
+    puts "Hallelujah"
+  end
+  
+  ezra.speak_hebrew
+  
+  # creating a new scribe
+  hammurabi = Scribe.new(pen)
+  puts hammurabi.pen
+  hammurabi.respond_to? :note   # => true
+  hammurabi.respond_to? :speak_hebrew  # => false
+  # since Babylonians don't speak hebrew ...
+  # hammurabi.speak_hebrew    # ... will fail
+  
+  # creating a clone of an object
+  pen2 = pen.clone
+  pen2.write("Matt")
+  
+  puts pen.object_id
+  puts pen2.object_id  # different object id
+

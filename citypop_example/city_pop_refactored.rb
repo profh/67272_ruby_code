@@ -53,14 +53,14 @@ class Population
     end
   end
   
+  
   private
   def read_file
+    return true unless file_lines.empty?
     file = File.open(@population_file)
     @file_lines = file.readlines()
   end
   
-
-
   def print_cities
     unless cities.empty? 
       sort_cities_alphabetically    # sort before printing
